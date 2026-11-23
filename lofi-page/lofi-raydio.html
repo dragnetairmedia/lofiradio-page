@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lofi Raydio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;600&family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: gallery-dark and moody, but the words stay casual and human.
+   IDEA: an artist's portfolio site — each release hung like a painting in a black gallery.
+   PICTURE: a red emblem (violin scroll in a circle) over a smeared paint stroke.
+   COLOUR and TYPE: near-black, white, one red accent, painterly colour only inside the art; Josefin Sans light caps + Montserrat bold.
+   LAYOUT: full-width black bands: hero, listen tiles, portfolio grid w/ filters, countdown, top tracks, footer columns. */
+:root{color-scheme:dark;--bg:#0b0b0b;--bg2:#141414;--tile:#1b1b1b;--ink:#f2f2f2;--soft:#9a9a9a;--line:#2a2a2a;--red:#e3262c}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.65 "Josefin Sans",system-ui,sans-serif;overflow-x:clip}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.in{max-width:1100px;margin:0 auto}
+.band{padding:clamp(48px,7vw,96px) max(5vw,18px)}
+.bar{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px max(5vw,18px);background:rgba(11,11,11,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.mark{display:flex;align-items:center;gap:10px;font:800 16px Montserrat,sans-serif}
+.mark b{color:var(--red);font-weight:300;font-family:"Josefin Sans"}
+.bar nav{display:flex;gap:22px;flex-wrap:wrap;font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--soft)}
+.bar nav a:hover{color:var(--ink)}
+@media(max-width:560px){.bar nav{display:none}}
+/* hero */
+.hero{position:relative;min-height:min(86vh,680px);display:grid;place-items:center;text-align:center;overflow:hidden;
+ background:radial-gradient(60% 50% at 50% 45%,#1f1f1f 0%,#0b0b0b 70%)}
+.hero .paint{position:absolute;inset:0;width:100%;height:100%;opacity:.8}
+.hero .ct{position:relative;padding:40px 18px}
+.emb{width:clamp(110px,22vw,160px);height:auto;display:block;margin:0 auto 18px;filter:drop-shadow(0 10px 30px rgba(227,38,44,.35))}
+h1{margin:0;line-height:1;font-size:clamp(52px,12vw,112px);text-wrap:balance}
+h1 .l{font:200 1em "Josefin Sans",sans-serif;color:var(--red)}
+h1 .r{font:800 1em Montserrat,sans-serif;letter-spacing:-.02em}
+.kick{margin:18px 0 0;text-transform:uppercase;letter-spacing:.24em;font-size:clamp(12px,2.4vw,15px);font-weight:400}
+.hero .cta{display:inline-flex;align-items:center;gap:10px;margin-top:30px;min-height:48px;padding:12px 26px;background:var(--red);color:#fff;font:700 13px Montserrat,sans-serif;text-transform:uppercase;letter-spacing:.14em}
+.hero .cta:hover{background:#ff3a40}
+/* section heads */
+.hd{text-align:center;margin-bottom:38px}
+.hd h2{margin:0;font:300 clamp(28px,5vw,40px)/1.1 "Josefin Sans";text-transform:uppercase;letter-spacing:.12em}
+.hd p{margin:8px auto 0;color:var(--soft);max-width:520px}
+.hd::after{content:"";display:block;width:46px;height:2px;background:var(--red);margin:18px auto 0}
+/* listen tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:2px;background:var(--line);border:1px solid var(--line)}
+.tile{display:grid;place-items:center;gap:10px;padding:26px 12px;background:var(--tile);text-align:center;font-size:14px;text-transform:uppercase;letter-spacing:.12em;transition:background .2s}
+.tile:hover{background:#242424}
+.tile svg{width:30px;height:30px}
+.tile.sp{grid-column:span 2;background:var(--red);color:#fff;font:700 14px Montserrat;letter-spacing:.12em}
+.tile.sp:hover{background:#ff3a40}
+@media(max-width:400px){.tile.sp{grid-column:auto}}
+/* portfolio */
+.filters{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin-bottom:28px}
+.filters button{min-height:40px;padding:8px 16px;background:none;border:1px solid var(--line);color:var(--soft);font:400 12px "Josefin Sans";text-transform:uppercase;letter-spacing:.16em;cursor:pointer}
+.filters button[aria-pressed=true]{background:var(--red);border-color:var(--red);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px}
+.work{display:block;background:#fff;padding:10px;box-shadow:0 14px 30px rgba(0,0,0,.5);transition:transform .25s}
+.work:hover{transform:translateY(-4px)}
+.work .art{display:block;width:100%;aspect-ratio:1;position:relative;overflow:hidden;background:#111}
+.work .art svg,.work .art img{width:100%;height:100%;display:block;object-fit:cover}
+.work .ov{position:absolute;inset:0;display:grid;place-items:center;background:rgba(11,11,11,.7);color:#fff;opacity:0;transition:opacity .25s;font:700 12px Montserrat;letter-spacing:.16em;text-transform:uppercase}
+.work:hover .ov,.work:focus-visible .ov{opacity:1}
+.work .cap{display:block;padding:12px 4px 4px;color:#111}
+.work .cap b{display:block;font:700 15px Montserrat}
+.work .cap span{color:#666;font-size:14px}
+.work[hidden]{display:none}
+.note{color:#555;font-size:14px;margin-top:4px;display:block}
+/* countdown */
+.cd{background:#141414 linear-gradient(90deg,rgba(227,38,44,.12),transparent 60%);text-align:center}
+.cd h3{margin:0;font:300 clamp(20px,3.6vw,28px) "Josefin Sans";text-transform:uppercase;letter-spacing:.14em}
+.nums{display:flex;justify-content:center;gap:clamp(16px,5vw,48px);margin:26px 0}
+.nums div{min-width:64px}
+.nums b{display:block;font:200 clamp(40px,8vw,64px)/1 "Josefin Sans";font-variant-numeric:tabular-nums}
+.nums small{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--soft)}
+.ghost{display:inline-flex;align-items:center;min-height:46px;padding:10px 24px;border:1px solid var(--red);font:700 12px Montserrat;letter-spacing:.14em;text-transform:uppercase}
+.ghost:hover{background:var(--red)}
+/* tracks */
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:48px;align-items:start}
+@media(max-width:780px){.two{grid-template-columns:minmax(0,1fr)}}
+.about h2{margin:0 0 14px;font:300 32px/1.1 "Josefin Sans";text-transform:uppercase;letter-spacing:.12em}
+.about h2::after{content:"";display:block;width:46px;height:2px;background:var(--red);margin-top:14px}
+.about p{color:#cfcfcf;margin:0 0 14px;font-size:17px}
+.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 18px;background:var(--tile);padding:18px 20px;margin-top:20px;font-size:15px}
+.facts dt{color:var(--soft)}.facts dd{margin:0}
+.trks{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.trks a{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;min-height:60px;padding:8px 6px;border-bottom:1px solid var(--line);transition:background .2s}
+.trks a:hover{background:var(--bg2)}
+.trks .n{font:200 26px "Josefin Sans";color:var(--red)}
+.trks b{font-weight:400;font-size:17px}
+.trks time{color:var(--soft);font-variant-numeric:tabular-nums;white-space:nowrap}
+/* footer */
+footer{background:#070707;border-top:1px solid var(--line)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px}
+.cols h4{margin:0 0 14px;font:400 13px "Josefin Sans";text-transform:uppercase;letter-spacing:.18em}
+.cols p,.cols a{color:var(--soft);font-size:15px}
+.cols ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.cols a:hover{color:var(--ink)}
+.copy{text-align:center;color:#666;font-size:13px;margin-top:40px;letter-spacing:.08em}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="bar">
+ <a class="mark" href="#top"><svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#e3262c"/><path d="M50 22c10 0 14 8 10 14-3 5-10 4-10-2 0-4 5-4 5-1M50 34v44M42 62c-8 0-8 12 0 12M58 62c8 0 8 12 0 12" stroke="#0b0b0b" stroke-width="6" fill="none" stroke-linecap="round"/></svg><span><b>lofi</b> RAYDIO</span></a>
+ <nav aria-label="Sections"><a href="#listen">Listen</a><a href="#work">Releases</a><a href="#tracks">Top tracks</a></nav>
+</header>
+
+<section class="hero" id="top">
+ <svg class="paint" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+   <linearGradient id="st" x1="0" x2="1"><stop offset="0" stop-color="#e3262c" stop-opacity="0"/><stop offset=".3" stop-color="#e3262c" stop-opacity=".55"/><stop offset=".6" stop-color="#ff8a3d" stop-opacity=".35"/><stop offset="1" stop-color="#3fb5c9" stop-opacity="0"/></linearGradient>
+   <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".02 .2" numOctaves="3" seed="4"/><feDisplacementMap in="SourceGraphic" scale="40"/></filter>
+  </defs>
+  <g filter="url(#rough)">
+   <path d="M-40 420C200 330 420 470 640 380S1000 300 1260 360" stroke="url(#st)" stroke-width="150" fill="none" stroke-linecap="round"/>
+   <path d="M-40 300C260 250 520 330 760 280S1080 240 1260 260" stroke="url(#st)" stroke-width="40" fill="none" opacity=".6"/>
+  </g>
+ </svg>
+ <div class="ct">
+  <svg class="emb" viewBox="0 0 100 100" role="img" aria-label="Lofi Raydio emblem"><circle cx="50" cy="50" r="46" fill="#e3262c"/><path d="M50 22c10 0 14 8 10 14-3 5-10 4-10-2 0-4 5-4 5-1M50 34v44M42 62c-8 0-8 12 0 12M58 62c8 0 8 12 0 12" stroke="#0b0b0b" stroke-width="6" fill="none" stroke-linecap="round"/></svg>
+  <h1><span class="l">lofi</span> <span class="r">RAYDIO</span></h1>
+  <p class="kick">music for the quiet moments · and the loud ones</p>
+  <a class="cta" href="https://open.spotify.com/artist/3xr1T1I5hKT3tWGwYcytO9" target="_blank" rel="noopener">▶ Listen on Spotify</a>
+ </div>
+</section>
+
+<section class="band" id="listen">
+ <div class="in">
+  <div class="hd"><h2>Where to listen</h2><p>pick your app, hit play, zone out. i'm on all of 'em.</p></div>
+  <div class="tiles" id="tiles"></div>
+ </div>
+</section>
+
+<section class="band" id="work" style="background:var(--bg2)">
+ <div class="in">
+  <div class="hd"><h2>Releases</h2><p>every drop so far, hung up like a little gallery. tap one to listen.</p></div>
+  <div class="filters" id="filters" role="group" aria-label="Filter releases"></div>
+  <div class="grid" id="grid"></div>
+ </div>
+</section>
+
+<section class="band cd">
+ <div class="in">
+  <h3>Christmas is coming — got your playlist ready?</h3>
+  <div class="nums" id="nums" aria-live="polite"></div>
+  <a class="ghost" href="https://open.spotify.com/album/4etdleYZDIJIdbb1De8hsb" target="_blank" rel="noopener">Play “Merry in Our Own Way”</a>
+ </div>
+</section>
+
+<section class="band" id="tracks">
+ <div class="in two">
+  <div class="about">
+   <h2>About me</h2>
+   <p>hey, it's Lofi Raydio. i make lofi you can study to, cry to, pray to, or just vibe to at 2am.</p>
+   <p>no big label, no big budget, just beats, a violin and a lot of feelings. if a song hits, share it with somebody who needs it. that's the whole goal fr.</p>
+   <dl class="facts"><dt>Sound</dt><dd>lofi · chill · jazz-touched</dd><dt>Latest</dt><dd>New Begining (2026)</dd><dt>Listen</dt><dd>Spotify + everywhere else</dd></dl>
+  </div>
+  <div>
+   <div class="hd" style="text-align:left;margin-bottom:20px"><h2>On repeat</h2></div>
+   <ol class="trks" id="trks"></ol>
+  </div>
+ </div>
+</section>
+
+<footer class="band">
+ <div class="in">
+  <div class="cols">
+   <div><h4>Lofi Raydio</h4><p>beats for the quiet moments. thanks for pulling up 🖤</p></div>
+   <div><h4>Listen</h4><ul id="flinks"></ul></div>
+   <div><h4>Latest drops</h4><ul id="fdrops"></ul></div>
+  </div>
+  <p class="copy">© 2026 LOFI RAYDIO</p>
+ </div>
+</footer>
+
+<script>
+{
+ const q='Lofi%20Raydio', SP='https://open.spotify.com/artist/3xr1T1I5hKT3tWGwYcytO9';
+ const note='<path d="M9 18V6l11-2v12" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="7" cy="18" r="2.4" fill="currentColor"/><circle cx="18" cy="16" r="2.4" fill="currentColor"/>';
+ const play='<circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 8l6 4-6 4z" fill="currentColor"/>';
+ const wave='<path d="M3 12h2M7 8v8M11 5v14M15 8v8M19 10v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>';
+ const radio='<rect x="3" y="8" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 8l10-5" stroke="currentColor" stroke-width="1.6"/><circle cx="15.5" cy="14" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 12h4M6 15h4" stroke="currentColor" stroke-width="1.6"/>';
+ const apps=[
+  ['Apple Music',note,'https://music.apple.com/us/search?term='+q],
+  ['YouTube',play,'https://www.youtube.com/results?search_query='+q],
+  ['YouTube Music',play,'https://music.youtube.com/search?q='+q],
+  ['Amazon Music',note,'https://music.amazon.com/search/'+q],
+  ['Tidal',wave,'https://listen.tidal.com/search?q='+q],
+  ['Deezer',wave,'https://www.deezer.com/search/'+q],
+  ['Pandora',radio,'https://www.pandora.com/search/'+q+'/all'],
+  ['iHeartRadio',radio,'https://www.iheart.com/search/?q='+q]
+ ];
+ const ic=p=>`<svg viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
+ document.getElementById('tiles').innerHTML=`<a class="tile sp" href="${SP}" target="_blank" rel="noopener">${ic(play)}Spotify</a>`+
+  apps.map(([n,i,u])=>`<a class="tile" href="${u}" target="_blank" rel="noopener">${ic(i)}${n}</a>`).join('');
+
+ /* RELEASES — newest first. img = cover image (a web link, or a file in the same folder like 'covers/my-song.jpg').
+    Leave img out and a painted cover is drawn from the p colours instead. */
+ const works=[
+  {t:'New Begining',s:'Single · 2026',d:'for when you’re ready to start over',k:'single',u:'https://open.spotify.com/album/6QKXexPcSRabEuOnak6hFL',img:'https://i.scdn.co/image/ab67616d0000b273b5a8bd64e06562b2b0f73a10',p:['#f6e7d0','#ff8a3d','#e3262c','#ffd23f','#2a2a2a']},
+  {t:'Merry in Our Own Way',s:'Country-Jazz Remix',d:'holiday, but make it swing',k:'holiday',u:'https://open.spotify.com/album/4etdleYZDIJIdbb1De8hsb',img:'https://i.scdn.co/image/ab67616d0000b273e38e51236fef755d45220f89',p:['#0f2b2e','#3fb5c9','#e3262c','#f4f1e8','#1f7a5a']},
+  {t:'Merry in Our Own Way',s:'Original',d:'the cozy version',k:'holiday',u:'https://open.spotify.com/album/5yaNuTBClXFhNn7s4sP8eo',img:'https://i.scdn.co/image/ab67616d0000b273a5d8a73059fa9d563809c17e',p:['#1a1030','#e3262c','#f4f1e8','#7b5cff','#3fb5c9']},
+  {t:'You did it',s:'Single · 2025',d:'a proud-of-you song',k:'single',u:'https://open.spotify.com/album/1YqAuttGvpNARvapBrPA7a',img:'https://i.scdn.co/image/ab67616d0000b2732d020b2a6a89536f7bc175e1',p:['#fdf1e0','#3fb5c9','#ff5fa2','#ffd23f','#111']},
+  {t:'You did it',s:'Bonus Track',d:'didn’t make the cut, couldn’t gatekeep it',k:'bonus',u:'https://open.spotify.com/track/03FoneOHnk75veK65JBYS5',img:'https://i.scdn.co/image/ab67616d0000b2732d020b2a6a89536f7bc175e1',p:['#111','#ff5fa2','#ffd23f','#e3262c','#f4f1e8']},
+  {t:'More Than Conqueror',s:'Single',d:'you’re doing better than you think',k:'single',u:'https://open.spotify.com/album/2n4k0KNdFTrC8EPCB57ruz',img:'https://i.scdn.co/image/ab67616d0000b2737a4bad13f5aa8c671fd0c926',p:['#2a0d0d','#e3262c','#ff8a3d','#f4f1e8','#ffd23f']}
+ ];
+ const rnd=s=>()=>((s=Math.imul(s^s>>>15,1|s)+0x6D2B79F5|0,((s^s>>>14)>>>0)/4294967296));
+ const cover=(p,i)=>{const r=rnd(i*977+13);let g=`<rect width="200" height="200" fill="${p[0]}"/>`;
+  for(let k=0;k<9;k++){const c=p[1+(k%4)],y=20+r()*160,w=18+r()*46,a=(r()-.5)*50;
+   g+=`<path d="M-20 ${y}C60 ${y-30*r()} 120 ${y+30*r()} 220 ${y-10}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" fill="none" opacity="${.55+r()*.4}" transform="rotate(${a} 100 100)"/>`}
+  return `<svg viewBox="0 0 200 200" aria-hidden="true"><filter id="f${i}"><feTurbulence type="fractalNoise" baseFrequency=".03 .25" numOctaves="2" seed="${i+2}"/><feDisplacementMap in="SourceGraphic" scale="18"/></filter><g filter="url(#f${i})">${g}</g></svg>`};
+ const grid=document.getElementById('grid');
+ grid.innerHTML=works.map((w,i)=>`<a class="work" data-k="${w.k}" href="${w.u}" target="_blank" rel="noopener"><span class="art">${w.img?`<img src="${w.img}" alt="${w.t} cover art" loading="lazy">`:cover(w.p,i)}<span class="ov">▶ Listen</span></span><span class="cap"><b>${w.t}</b><span>${w.s}</span><span class="note">${w.d}</span></span></a>`).join('');
+ const fs=[['all','All'],['single','Singles'],['holiday','Holiday'],['bonus','Bonus']];
+ const fb=document.getElementById('filters');
+ fb.innerHTML=fs.map(([k,n],i)=>`<button type="button" data-k="${k}" aria-pressed="${i===0}">${n}</button>`).join('');
+ fb.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  fb.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  grid.querySelectorAll('.work').forEach(w=>w.hidden=!(b.dataset.k==='all'||w.dataset.k===b.dataset.k))});
+
+ const tr=[['Who I am','3:03','https://open.spotify.com/track/6hhk0nKEcM8bCPlTNq0BeP'],['Merry in Our Own Way (Country-Jazz Remix)','3:11','https://open.spotify.com/track/0vYN5KWgGROQb0M3qX9gSd'],['New Begining','3:24','https://open.spotify.com/track/3glhtppOftnNdczGlvIAbU'],['You did it','3:45','https://open.spotify.com/track/0hm3joO6fRiRHgiF9nnY3h'],['You did it (Bonus Track)','2:59','https://open.spotify.com/track/03FoneOHnk75veK65JBYS5']];
+ document.getElementById('trks').innerHTML=tr.map(([t,d,u],i)=>`<li><a href="${u}" target="_blank" rel="noopener"><span class="n">0${i+1}</span><b>${t}</b><time>${d}</time></a></li>`).join('');
+
+ document.getElementById('flinks').innerHTML=`<li><a href="${SP}" target="_blank" rel="noopener">Spotify</a></li>`+apps.slice(0,4).map(([n,,u])=>`<li><a href="${u}" target="_blank" rel="noopener">${n}</a></li>`).join('');
+ document.getElementById('fdrops').innerHTML=works.slice(0,4).map(w=>`<li><a href="${w.u}" target="_blank" rel="noopener">${w.t} · ${w.s}</a></li>`).join('');
+
+ const nums=document.getElementById('nums');
+ const tick=()=>{const now=new Date();let x=new Date(now.getFullYear(),11,25);if(now>x)x=new Date(now.getFullYear()+1,11,25);
+  let s=Math.max(0,Math.floor((x-now)/1000));const v=[Math.floor(s/86400),Math.floor(s%86400/3600),Math.floor(s%3600/60),s%60];
+  nums.innerHTML=v.map((n,i)=>`<div><b>${String(n).padStart(2,'0')}</b><small>${['Days','Hours','Minutes','Seconds'][i]}</small></div>`).join('')};
+ tick();const timer=setInterval(tick,1000);
+}
+</script>
+</body>
+</html>
