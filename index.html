@@ -51,6 +51,13 @@ h1 .r{font:800 1em Montserrat,sans-serif;letter-spacing:-.02em}
 .tile.sp{grid-column:span 2;background:var(--red);color:#fff;font:700 14px Montserrat;letter-spacing:.12em}
 .tile.sp:hover{background:#ff3a40}
 @media(max-width:400px){.tile.sp{grid-column:auto}}
+/* social links */
+.social-band{padding:30px max(5vw,18px);background:#101010;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.social-head{text-align:center;margin:0 0 16px;font:400 13px "Josefin Sans";text-transform:uppercase;letter-spacing:.18em;color:var(--soft)}
+.social-links{display:flex;justify-content:center;gap:12px}
+.social-links a{display:grid;place-items:center;width:48px;height:48px;background:var(--tile);border:1px solid var(--line);transition:color .2s,border-color .2s,background .2s}
+.social-links a:hover{color:var(--red);border-color:var(--red);background:#242424}
+.social-links svg{width:23px;height:23px;fill:currentColor}
 /* portfolio */
 .filters{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin-bottom:28px}
 .filters button{min-height:40px;padding:8px 16px;background:none;border:1px solid var(--line);color:var(--soft);font:400 12px "Josefin Sans";text-transform:uppercase;letter-spacing:.16em;cursor:pointer}
@@ -130,6 +137,26 @@ footer{background:#070707;border-top:1px solid var(--line)}
  <div class="in">
   <div class="hd"><h2>Where to listen</h2><p>pick your app, hit play, zone out. i'm on all of 'em.</p></div>
   <div class="tiles" id="tiles"></div>
+ </div>
+</section>
+
+<section class="social-band" aria-label="Follow Lofi Raydio">
+ <div class="in">
+  <h2 class="social-head">Follow along</h2>
+  <div class="social-links">
+   <a href="https://www.instagram.com/lofiraydio/" target="_blank" rel="noopener" aria-label="Instagram">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2"/></svg>
+   </a>
+   <a href="https://www.tiktok.com/@lofi_raydio" target="_blank" rel="noopener" aria-label="TikTok">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.02 1.72 4.1 1.1 1.05 2.61 1.51 4.08 1.66v4.03c-1.37-.05-2.74-.33-4.02-.92-.56-.25-1.08-.57-1.58-.91-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.36 3.93-1.32 1.94-3.62 3.2-5.98 3.24-1.45.08-2.9-.31-4.13-1.08-2.04-1.27-3.38-3.57-3.42-5.98-.12-1.44.28-2.88 1.06-4.09 1.25-2.03 3.58-3.39 5.98-3.43.27-.02.54-.03.81-.01.02 1.49-.04 2.98-.04 4.47-1-.32-2.13-.23-3.05.31-.67.39-1.18 1.03-1.44 1.76-.22.53-.16 1.12-.15 1.68.25 1.7 1.89 3.12 3.63 2.97 1.16-.01 2.27-.69 2.87-1.67.19-.33.4-.67.41-1.06.1-1.86.06-3.72.07-5.58.01-4.21-.01-8.42.02-12.63z"/></svg>
+   </a>
+   <a href="https://www.facebook.com/profile.php?id=61584600664130" target="_blank" rel="noopener" aria-label="Facebook">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5h1.7V3.9c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3V10H7.3v3h2.8v8h3.4z"/></svg>
+   </a>
+   <a href="https://bsky.app/profile/lofiraydio.bsky.social" target="_blank" rel="noopener" aria-label="Bluesky">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 3.5C7.8 5.4 10.5 9.2 12 11.8c1.5-2.6 4.2-6.4 6.8-8.3 1.9-1.4 5-2.5 5 1 0 .7-.4 5.9-.7 6.7-.9 2.8-4.1 3.5-7 3 5 .8 6.3 3.5 3.5 6.2-5.3 5.1-7.6-1.3-8.2-3.1-.1-.3-.2-.4-.4-.4s-.3.1-.4.4c-.6 1.8-2.9 8.2-8.2 3.1-2.8-2.7-1.5-5.4 3.5-6.2-2.9.5-6.1-.2-7-3-.3-.8-.7-6-.7-6.7 0-3.5 3.1-2.4 5-1z"/></svg>
+   </a>
+  </div>
  </div>
 </section>
 
