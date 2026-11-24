@@ -25,7 +25,13 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--red);outline-offset
 .mark b{color:var(--red);font-weight:300;font-family:"Josefin Sans"}
 .bar nav{display:flex;gap:22px;flex-wrap:wrap;font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--soft)}
 .bar nav a:hover{color:var(--ink)}
-@media(max-width:560px){.bar nav{display:none}}
+.nav-toggle{display:none;align-items:center;justify-content:center;min-height:42px;padding:8px 13px;border:1px solid var(--line);background:var(--tile);color:var(--ink);font:400 12px "Josefin Sans";text-transform:uppercase;letter-spacing:.14em;cursor:pointer}
+@media(max-width:560px){
+ .nav-toggle{display:inline-flex}
+ .bar nav{display:none;position:absolute;top:100%;left:0;right:0;z-index:6;flex-direction:column;gap:0;padding:8px 18px 14px;background:rgba(11,11,11,.98);border-bottom:1px solid var(--line)}
+ .bar nav[data-open=true]{display:flex}
+ .bar nav a{padding:10px 0}
+}
 /* hero */
 .hero{position:relative;min-height:min(86vh,680px);display:grid;place-items:center;text-align:center;overflow:hidden;
  background:radial-gradient(60% 50% at 50% 45%,#1f1f1f 0%,#0b0b0b 70%)}
@@ -64,7 +70,7 @@ h1 .r{font:800 1em Montserrat,sans-serif;letter-spacing:-.02em}
 .filters button{min-height:40px;padding:8px 16px;background:none;border:1px solid var(--line);color:var(--soft);font:400 12px "Josefin Sans";text-transform:uppercase;letter-spacing:.16em;cursor:pointer}
 .filters button[aria-pressed=true]{background:var(--red);border-color:var(--red);color:#fff}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px}
-.work{display:block;background:var(--tile);padding:8px;border:1px solid var(--line);box-shadow:0 12px 28px rgba(0,0,0,.28);transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+.work{display:block;width:100%;padding:8px;border:1px solid var(--line);background:var(--tile);color:inherit;text-align:left;font:inherit;cursor:pointer;box-shadow:0 12px 28px rgba(0,0,0,.28);transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
 .work:hover{transform:perspective(900px) translateY(-5px) rotateX(1.5deg) rotateY(-1deg);border-color:#493032;box-shadow:0 20px 36px rgba(0,0,0,.48)}
 .work .art{display:block;width:100%;aspect-ratio:1;position:relative;overflow:hidden;background:#111}
 .work .art svg,.work .art img{width:100%;height:100%;display:block;object-fit:cover}
@@ -75,6 +81,23 @@ h1 .r{font:800 1em Montserrat,sans-serif;letter-spacing:-.02em}
 .work .cap span{color:var(--soft);font-size:14px}
 .work[hidden]{display:none}
 .note{color:#858585;font-size:14px;margin-top:4px;display:block}
+.release-dialog{width:min(760px,calc(100% - 32px));max-width:760px;max-height:calc(100% - 32px);padding:0;overflow:auto;border:1px solid #393939;background:var(--bg2);color:var(--ink);box-shadow:0 24px 80px rgba(0,0,0,.65)}
+.release-dialog::backdrop{background:rgba(0,0,0,.78);backdrop-filter:blur(4px)}
+.release-dialog-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center}
+.release-dialog-art{aspect-ratio:1;background:#111}
+.release-dialog-art img,.release-dialog-art svg{display:block;width:100%;height:100%;object-fit:cover}
+.release-dialog-copy{position:relative;padding:clamp(24px,4vw,48px)}
+.release-dialog-kind{margin:0 0 10px;color:var(--red);font-size:12px;text-transform:uppercase;letter-spacing:.2em}
+.release-dialog-copy h2{margin:0 0 14px;font:700 clamp(22px,3vw,34px)/1.15 Montserrat,sans-serif}
+.release-dialog-description{margin:0 0 24px;color:#cfcfcf;font-size:17px}
+.release-dialog-listen{display:inline-flex;min-height:46px;align-items:center;padding:10px 18px;background:var(--red);color:#fff;font:700 12px Montserrat,sans-serif;text-transform:uppercase;letter-spacing:.12em}
+.release-dialog-listen:hover{background:#ff3a40}
+.release-dialog-close{position:absolute;top:12px;right:12px;display:grid;width:40px;height:40px;place-items:center;border:1px solid var(--line);background:var(--tile);color:var(--ink);font:300 24px/1 "Josefin Sans";cursor:pointer}
+@media(max-width:600px){
+ .release-dialog-layout{grid-template-columns:1fr}
+ .release-dialog-art{max-height:34vh}
+ .release-dialog-copy{padding:26px 22px 24px}
+}
 /* countdown */
 .cd{background:#141414 linear-gradient(90deg,rgba(227,38,44,.12),transparent 60%);text-align:center}
 .cd h3{margin:0;font:300 clamp(20px,3.6vw,28px) "Josefin Sans";text-transform:uppercase;letter-spacing:.14em}
@@ -112,7 +135,8 @@ footer{background:#070707;border-top:1px solid var(--line)}
 <body>
 <header class="bar">
  <a class="mark" href="#top"><svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#e3262c"/><path d="M50 22c10 0 14 8 10 14-3 5-10 4-10-2 0-4 5-4 5-1M50 34v44M42 62c-8 0-8 12 0 12M58 62c8 0 8 12 0 12" stroke="#0b0b0b" stroke-width="6" fill="none" stroke-linecap="round"/></svg><span><b>lofi</b> RAYDIO</span></a>
- <nav aria-label="Sections"><a href="#listen">Listen</a><a href="#work">Releases</a><a href="#tracks">Top tracks</a></nav>
+ <button class="nav-toggle" id="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false">Menu</button>
+ <nav id="primary-nav" aria-label="Sections"><a href="#listen">Listen</a><a href="#work">Releases</a><a href="#tracks">Top tracks</a></nav>
 </header>
 
 <section class="hero" id="top">
@@ -169,6 +193,19 @@ footer{background:#070707;border-top:1px solid var(--line)}
  </div>
 </section>
 
+<dialog class="release-dialog" id="release-dialog" aria-labelledby="release-dialog-title" aria-describedby="release-dialog-description">
+ <div class="release-dialog-layout">
+  <div class="release-dialog-art" id="release-dialog-art"></div>
+  <div class="release-dialog-copy">
+   <button class="release-dialog-close" id="release-dialog-close" type="button" aria-label="Close release details">×</button>
+   <p class="release-dialog-kind" id="release-dialog-kind"></p>
+   <h2 id="release-dialog-title"></h2>
+   <p class="release-dialog-description" id="release-dialog-description"></p>
+   <a class="release-dialog-listen" id="release-dialog-listen" target="_blank" rel="noopener">Listen on Spotify</a>
+  </div>
+ </div>
+</dialog>
+
 <section class="glassbound-band" aria-label="Glassbound visual interlude">
  <div id="root"></div>
 </section>
@@ -216,6 +253,17 @@ footer{background:#070707;border-top:1px solid var(--line)}
 <script>
 {
  const q='Lofi%20Raydio', SP='https://open.spotify.com/artist/3xr1T1I5hKT3tWGwYcytO9';
+ const menuButton=document.getElementById('nav-toggle');
+ const sectionNav=document.getElementById('primary-nav');
+ const closeMenu=()=>{menuButton.setAttribute('aria-expanded','false');menuButton.textContent='Menu';sectionNav.dataset.open='false'};
+ menuButton.addEventListener('click',()=>{
+  const open=menuButton.getAttribute('aria-expanded')!=='true';
+  menuButton.setAttribute('aria-expanded',String(open));
+  menuButton.textContent=open?'Close':'Menu';
+  sectionNav.dataset.open=String(open);
+ });
+ sectionNav.addEventListener('click',e=>{if(e.target.closest('a'))closeMenu()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menuButton.getAttribute('aria-expanded')==='true'){closeMenu();menuButton.focus()}});
  const note='<path d="M9 18V6l11-2v12" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="7" cy="18" r="2.4" fill="currentColor"/><circle cx="18" cy="16" r="2.4" fill="currentColor"/>';
  const play='<circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 8l6 4-6 4z" fill="currentColor"/>';
  const wave='<path d="M3 12h2M7 8v8M11 5v14M15 8v8M19 10v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>';
@@ -250,7 +298,30 @@ footer{background:#070707;border-top:1px solid var(--line)}
    g+=`<path d="M-20 ${y}C60 ${y-30*r()} 120 ${y+30*r()} 220 ${y-10}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" fill="none" opacity="${.55+r()*.4}" transform="rotate(${a} 100 100)"/>`}
   return `<svg viewBox="0 0 200 200" aria-hidden="true"><filter id="f${i}"><feTurbulence type="fractalNoise" baseFrequency=".03 .25" numOctaves="2" seed="${i+2}"/><feDisplacementMap in="SourceGraphic" scale="18"/></filter><g filter="url(#f${i})">${g}</g></svg>`};
  const grid=document.getElementById('grid');
- grid.innerHTML=works.map((w,i)=>`<a class="work" data-k="${w.k}" href="${w.u}" target="_blank" rel="noopener"><span class="art">${w.img?`<img src="${w.img}" alt="${w.t} cover art" loading="lazy">`:cover(w.p,i)}<span class="ov">▶ Listen</span></span><span class="cap"><b>${w.t}</b><span>${w.s}</span><span class="note">${w.d}</span></span></a>`).join('');
+ grid.innerHTML=works.map((w,i)=>`<button class="work" type="button" data-k="${w.k}" data-index="${i}" aria-haspopup="dialog"><span class="art">${w.img?`<img src="${w.img}" alt="" loading="lazy">`:cover(w.p,i)}<span class="ov">View details</span></span><span class="cap"><b>${w.t}</b><span>${w.s}</span><span class="note">${w.d}</span></span></button>`).join('');
+ const releaseDialog=document.getElementById('release-dialog');
+ const releaseDialogArt=document.getElementById('release-dialog-art');
+ const releaseDialogClose=document.getElementById('release-dialog-close');
+ const releaseDialogKind=document.getElementById('release-dialog-kind');
+ const releaseDialogTitle=document.getElementById('release-dialog-title');
+ const releaseDialogDescription=document.getElementById('release-dialog-description');
+ const releaseDialogListen=document.getElementById('release-dialog-listen');
+ grid.addEventListener('click',e=>{
+  const card=e.target.closest('.work');
+  if(!card)return;
+  const work=works[Number(card.dataset.index)];
+  if(!work)return;
+  releaseDialogArt.innerHTML=work.img?`<img src="${work.img}" alt="${work.t} cover art">`:cover(work.p,Number(card.dataset.index));
+  releaseDialogKind.textContent=work.s;
+  releaseDialogTitle.textContent=work.t;
+  releaseDialogDescription.textContent=work.d;
+  releaseDialogListen.href=work.u;
+  releaseDialog.showModal();
+ });
+ releaseDialogClose.addEventListener('click',()=>releaseDialog.close());
+ releaseDialog.addEventListener('cancel',e=>{e.preventDefault();releaseDialog.close()});
+ releaseDialog.addEventListener('click',e=>{if(e.target===releaseDialog)releaseDialog.close()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&releaseDialog.open)releaseDialog.close()});
  const fs=[['all','All'],['single','Singles'],['holiday','Holiday'],['bonus','Bonus']];
  const fb=document.getElementById('filters');
  fb.innerHTML=fs.map(([k,n],i)=>`<button type="button" data-k="${k}" aria-pressed="${i===0}">${n}</button>`).join('');
