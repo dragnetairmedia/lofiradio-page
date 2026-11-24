@@ -38,6 +38,7 @@ h1 .r{font:800 1em Montserrat,sans-serif;letter-spacing:-.02em}
 .kick{margin:18px 0 0;text-transform:uppercase;letter-spacing:.24em;font-size:clamp(12px,2.4vw,15px);font-weight:400}
 .hero .cta{display:inline-flex;align-items:center;gap:10px;margin-top:30px;min-height:48px;padding:12px 26px;background:var(--red);color:#fff;font:700 13px Montserrat,sans-serif;text-transform:uppercase;letter-spacing:.14em}
 .hero .cta:hover{background:#ff3a40}
+.glassbound-band{overflow:hidden;padding:clamp(16px,2.4vw,28px) 0;background:linear-gradient(180deg,#0b0b0b,#111 50%,#0b0b0b);border-block:1px solid var(--line)}
 /* section heads */
 .hd{text-align:center;margin-bottom:38px}
 .hd h2{margin:0;font:300 clamp(28px,5vw,40px)/1.1 "Josefin Sans";text-transform:uppercase;letter-spacing:.12em}
@@ -63,17 +64,17 @@ h1 .r{font:800 1em Montserrat,sans-serif;letter-spacing:-.02em}
 .filters button{min-height:40px;padding:8px 16px;background:none;border:1px solid var(--line);color:var(--soft);font:400 12px "Josefin Sans";text-transform:uppercase;letter-spacing:.16em;cursor:pointer}
 .filters button[aria-pressed=true]{background:var(--red);border-color:var(--red);color:#fff}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px}
-.work{display:block;background:#fff;padding:10px;box-shadow:0 14px 30px rgba(0,0,0,.5);transition:transform .25s}
-.work:hover{transform:translateY(-4px)}
+.work{display:block;background:var(--tile);padding:8px;border:1px solid var(--line);box-shadow:0 12px 28px rgba(0,0,0,.28);transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+.work:hover{transform:perspective(900px) translateY(-5px) rotateX(1.5deg) rotateY(-1deg);border-color:#493032;box-shadow:0 20px 36px rgba(0,0,0,.48)}
 .work .art{display:block;width:100%;aspect-ratio:1;position:relative;overflow:hidden;background:#111}
 .work .art svg,.work .art img{width:100%;height:100%;display:block;object-fit:cover}
 .work .ov{position:absolute;inset:0;display:grid;place-items:center;background:rgba(11,11,11,.7);color:#fff;opacity:0;transition:opacity .25s;font:700 12px Montserrat;letter-spacing:.16em;text-transform:uppercase}
 .work:hover .ov,.work:focus-visible .ov{opacity:1}
-.work .cap{display:block;padding:12px 4px 4px;color:#111}
+.work .cap{display:block;padding:12px 4px 4px;color:var(--ink)}
 .work .cap b{display:block;font:700 15px Montserrat}
-.work .cap span{color:#666;font-size:14px}
+.work .cap span{color:var(--soft);font-size:14px}
 .work[hidden]{display:none}
-.note{color:#555;font-size:14px;margin-top:4px;display:block}
+.note{color:#858585;font-size:14px;margin-top:4px;display:block}
 /* countdown */
 .cd{background:#141414 linear-gradient(90deg,rgba(227,38,44,.12),transparent 60%);text-align:center}
 .cd h3{margin:0;font:300 clamp(20px,3.6vw,28px) "Josefin Sans";text-transform:uppercase;letter-spacing:.14em}
@@ -105,7 +106,7 @@ footer{background:#070707;border-top:1px solid var(--line)}
 .cols ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
 .cols a:hover{color:var(--ink)}
 .copy{text-align:center;color:#666;font-size:13px;margin-top:40px;letter-spacing:.08em}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}.work:hover{transform:none}}
 </style>
 </head>
 <body>
@@ -166,6 +167,10 @@ footer{background:#070707;border-top:1px solid var(--line)}
   <div class="filters" id="filters" role="group" aria-label="Filter releases"></div>
   <div class="grid" id="grid"></div>
  </div>
+</section>
+
+<section class="glassbound-band" aria-label="Glassbound visual interlude">
+ <div id="root"></div>
 </section>
 
 <section class="band cd">
@@ -266,5 +271,6 @@ footer{background:#070707;border-top:1px solid var(--line)}
  tick();const timer=setInterval(tick,1000);
 }
 </script>
+ <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
