@@ -269,14 +269,14 @@ footer{background:#070707;border-top:1px solid var(--line)}
  const wave='<path d="M3 12h2M7 8v8M11 5v14M15 8v8M19 10v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>';
  const radio='<rect x="3" y="8" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 8l10-5" stroke="currentColor" stroke-width="1.6"/><circle cx="15.5" cy="14" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 12h4M6 15h4" stroke="currentColor" stroke-width="1.6"/>';
  const apps=[
-  ['Apple Music',note,'https://music.apple.com/us/search?term='+q],
-  ['YouTube',play,'https://www.youtube.com/results?search_query='+q],
-  ['YouTube Music',play,'https://music.youtube.com/search?q='+q],
+  ['Apple Music',note,'https://music.apple.com/us/artist/lofi-raydio/1857694411'],
+  ['YouTube',play,'https://www.youtube.com/@LofiRaydio'],
+  ['YouTube Music',play,'https://music.youtube.com/@LofiRaydio'],
   ['Amazon Music',note,'https://music.amazon.com/search/'+q],
-  ['Tidal',wave,'https://listen.tidal.com/search?q='+q],
-  ['Deezer',wave,'https://www.deezer.com/search/'+q],
-  ['Pandora',radio,'https://www.pandora.com/search/'+q+'/all'],
-  ['iHeartRadio',radio,'https://www.iheart.com/search/?q='+q]
+  ['Tidal',wave,'https://tidal.com/artist/lofi-raydio/70587362'],
+  ['Deezer',wave,'https://www.deezer.com/us/artist/359284472'],
+  ['Pandora',radio,'https://www.pandora.com/artist/lofi-raydio/AR63hqZldhlvKw2'],
+  ['iHeartRadio',radio,'https://www.iheart.com/artist/lofi-raydio-48802806/']
  ];
  const ic=p=>`<svg viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
  document.getElementById('tiles').innerHTML=`<a class="tile sp" href="${SP}" target="_blank" rel="noopener">${ic(play)}Spotify</a>`+
